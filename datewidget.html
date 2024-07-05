@@ -1,6 +1,9 @@
-<html> 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Greeting Message</title> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeting Message</title>
     <style>
       #lbl {
         display: flex;
@@ -11,80 +14,81 @@
         border: 1px solid #191919;
         justify-content: left;
         line-height: 1.5;
-        height:85%;
+        height: 85%;
         font-weight: bold;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       #container {
         display: flex;
+        flex-direction: column;
         align-items: flex-start;
       }
 
       #date {
-          font-size:12pt;
-          font-weight: bold;
-      }
-        
-      #date {
-          font-size:15pt;
+          font-size: 12pt;
           font-weight: bold;
       }
 
-      body{
+      #week {
+          font-size: 12pt;
+          margin-top: 5px;
+          font-weight: bold;
+      }
+
+      .greeting {
+          font-size: 15pt;
+          margin-top: 10px;
+      }
+
+      body {
           background-color: #191919;
       }
     </style>
 </head>
 <body>
     <div id="lbl"></div>
+
+    <script>
+        // Array for weekday names
+        var weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+        // Array for month names
+        const monthNames = ["january", "february", "march", "april", "may", "june",
+            "july", "august", "september", "october", "november", "december"];
+
+        // Function to calculate ISO week number
+        function getWeekNumber(d) {
+            d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return weekNo;
+        }
+
+        var today = new Date();
+        var hrs = today.getHours();
+        var dayOfWeek = weekday[today.getDay()];
+        var weekNumber = getWeekNumber(today);
+        var date = `${dayOfWeek}, ${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+
+        var greet;
+
+        if (hrs < 12)
+            greet = 'good morning, Pedro.';
+        else if (hrs >= 12 && hrs <= 18)
+            greet = 'good afternoon, Pedro.';
+        else if (hrs > 18 && hrs <= 24)
+            greet = 'good evening, Pedro.';
+
+        document.getElementById('lbl').innerHTML = `
+            <div id="container">
+                <div id="date">${date}</div>
+                <div id="week">Week ${weekNumber}</div>
+                <div class="greeting">${greet}</div>
+            </div>
+        `;
+    </script>
 </body>
-
-<script>
-    // Array for weekday names
-    var weekday = new Array(7);
-    weekday[0] = "sunday";
-    weekday[1] = "monday";
-    weekday[2] = "tuesday";
-    weekday[3] = "wednesday";
-    weekday[4] = "thursday";
-    weekday[5] = "friday";
-    weekday[6] = "saturday";
-
-    // Array for month names
-    const monthNames = ["january", "february", "march", "april", "may", "june",
-      "july", "august", "september", "october", "november", "december"];
-
-    // Function to calculate ISO week number
-    function getWeekNumber(d) {
-        d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-        var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-        return weekNo;
-    }
-
-    var today = new Date();
-    var hrs = today.getHours();
-    var dayOfWeek = weekday[today.getDay()];
-    var weekNumber = getWeekNumber(today);
-    var date = `${dayOfWeek}, ${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
-
-    var greet;
-
-    if (hrs < 12)
-        greet = 'good morning, Pedro.';
-    else if (hrs >= 12 && hrs <= 18)
-        greet = 'good afternoon, Pedro.';
-    else if (hrs >= 18 && hrs <= 24)
-        greet = 'good evening, Pedro.';
-
-    document.getElementById('lbl').innerHTML = `
-        <div class="container">
-          <div id="date">${date}</div>
-          <div id="week">${weekNumber}</div>
-          <div class="greeting">${greet}</div>
-        <div/>
-    `;
-</script>
 </html>

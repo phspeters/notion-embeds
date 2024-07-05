@@ -27,7 +27,8 @@
       }
 
       #date {
-          font-size: 12pt;
+          font-size: 15pt;
+          margin-top: 5px;
           font-weight: bold;
       }
 
@@ -38,7 +39,7 @@
       }
 
       .greeting {
-          font-size: 15pt;
+          font-size: 18pt;
           margin-top: 10px;
       }
 
@@ -84,8 +85,8 @@
 
         document.getElementById('lbl').innerHTML = `
             <div id="container">
-                <div id="date">${date}</div>
                 <div id="week">Week ${weekNumber}</div>
+                <div id="date">${date}</div>
                 <div class="greeting">${greet}</div>
             </div>
         `;

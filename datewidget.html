@@ -36,6 +36,7 @@
 </body>
 
 <script>
+    // Array for weekday names
     var weekday = new Array(7);
     weekday[0] = "sunday";
     weekday[1] = "monday";
@@ -45,30 +46,39 @@
     weekday[5] = "friday";
     weekday[6] = "saturday";
 
+    // Array for month names
     const monthNames = ["january", "february", "march", "april", "may", "june",
-      "july", "august", "september", "october", "november", "december"
-    ];
+      "july", "august", "september", "october", "november", "december"];
 
-    
+    // Function to calculate ISO week number
+    function getWeekNumber(d) {
+        d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+        var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        return weekNo;
+    }
+
     var today = new Date();
     var hrs = today.getHours();
     var dayOfWeek = weekday[today.getDay()];
-    var date = `${dayOfWeek}, ${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+    var weekNumber = getWeekNumber(today);
+    var date = `${dayOfWeek}, ${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()} - Week #${weekNumber}`;
 
     var greet;
 
     if (hrs < 12)
-        greet = 'good morning, Pedro.  ';
+        greet = 'good morning, Pedro.';
     else if (hrs >= 12 && hrs <= 18)
-        greet = 'good afternoon, Pedro. ';
+        greet = 'good afternoon, Pedro.';
     else if (hrs >= 18 && hrs <= 24)
-        greet = 'good evening, Pedro.  ';
+        greet = 'good evening, Pedro.';
 
     document.getElementById('lbl').innerHTML = `
         <div class="container">
-          <div id="date"> ${date}</div>
+          <div id="date">${date}</div>
           <div class="greeting">${greet}</div>
         <div/>
     `;
-</script> 
+</script>
 </html>

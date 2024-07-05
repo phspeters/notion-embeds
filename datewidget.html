@@ -21,8 +21,13 @@
         align-items: flex-start;
       }
 
-      #date{
+      #date {
           font-size:12pt;
+          font-weight: bold;
+      }
+        
+      #date {
+          font-size:15pt;
           font-weight: bold;
       }
 
@@ -63,7 +68,7 @@
     var hrs = today.getHours();
     var dayOfWeek = weekday[today.getDay()];
     var weekNumber = getWeekNumber(today);
-    var date = `${dayOfWeek}, ${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()} - Week #${weekNumber}`;
+    var date = `${dayOfWeek}, ${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
 
     var greet;
 
@@ -77,6 +82,7 @@
     document.getElementById('lbl').innerHTML = `
         <div class="container">
           <div id="date">${date}</div>
+          <div id="week">${weekNumber}</div>
           <div class="greeting">${greet}</div>
         <div/>
     `;
